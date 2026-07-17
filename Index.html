@@ -1,0 +1,612 @@
+<!DOCTYPE html><html class="dark lenis lenis-smooth" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e9c176",
+                        "primary-container": "#c5a059",
+                        "on-primary": "#412d00",
+                        "surface": "#131313",
+                        "surface-container": "#201f1f",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-surface": "#e5e2e1",
+                        "on-surface-variant": "#d1c5b4",
+                        "outline": "#9a8f80",
+                        "background": "#131313"
+                    },
+                    spacing: {
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "lg": "48px",
+                        "md": "24px",
+                        "sm": "12px",
+                        "base": "8px"
+                    },
+                    fontFamily: {
+                        "display-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-sm": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .gold-glow { text-shadow: 0 0 20px rgba(233, 193, 118, 0.4); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); }
+        .btn-shine { position: relative; overflow: hidden; }
+        .btn-shine::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); transform: rotate(45deg); transition: 0.5s; }
+        .btn-shine:hover::after { left: 100%; }
+        .infinite-scroll { display: flex; width: max-content; animation: scroll 30s linear infinite; }
+        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .faq-content { transition: max-height 0.3s ease-out; }
+        html { scroll-behavior: initial; }
+
+        /* Effervescence Effects */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .effervescent-text {
+            background: linear-gradient(90deg, #ffffff, #ffe4a3, #ffd700, #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientMove 3s linear infinite;
+        }
+
+        .glow-burst {
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 5px rgba(255,255,255,0.2), 0 0 10px rgba(255,215,0,0.2); }
+            50% { text-shadow: 0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,215,0,0.4); }
+        }
+
+        .sparkle-animation {
+            animation: sparkle 0.5s ease-out;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.15); filter: brightness(1.5); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+
+        /* Swiper Navigation Styling */
+        .swiper-button-next, .swiper-button-prev { color: #e9c176 !important; }
+        .swiper-button-next::after, .swiper-button-prev::after { font-size: 24px !important; font-weight: bold; }
+    </style>
+<style data-styled="active" data-styled-version="6.1.13"></style><style data-styled="active" data-styled-version="6.1.13"></style><style data-styled="active" data-styled-version="6.1.13"></style></head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Floating WhatsApp Button -->
+<!-- Back to Top Button -->
+<button class="fixed bottom-28 left-8 z-[100] bg-surface-container text-primary w-12 h-12 rounded-full flex items-center justify-center shadow-xl opacity-0 translate-y-10 transition-all duration-300 hover:bg-primary hover:text-on-primary" id="backToTop">
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+<!-- Top Navigation -->
+<header class="fixed top-0 w-full z-50 bg-surface/50 backdrop-blur-xl border-b border-white/10 shadow-2xl h-20">
+<nav class="max-w-[1200px] mx-auto flex justify-between items-center px-margin-mobile md:px-margin-desktop h-full">
+<a class="flex items-center gap-4 group" href="#">
+<img alt="Migue Strategy Logo" class="h-10 w-auto group-hover:scale-105 transition-all duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjTv1Byhab6hyAJqT7F5wIwQ16rlXxOyRyl-cRxW1QVZToz07JYu311bpL5ygn5XO7Z0phBiJgWQV4ld2qvJ1gYFD-moAVGd8QYmdtM4N247MMvHguh6lobrxt6Pb57mCfuNU5a2eboZTvpwg4bg3sfopxC3kpRLjJx2C4yiQMLIB_tlOFLXNKIRN8KSi9sKK9ZUF7y5eiNzGHOIwHbDPuMoxvucEeNzjNlQGo4RVPMz1SXlYq1HY85y6QvoXhphPezs1UTKWkGXQ">
+<span class="font-display-sm text-display-sm font-bold text-primary hidden sm:block group-hover:brightness-110 transition-all">Migue Strategy</span>
+</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface/70 hover:text-primary font-label-md transition-all duration-300 hover:-translate-y-0.5" href="#problema">Problema</a>
+<a class="text-on-surface/70 hover:text-primary font-label-md transition-all duration-300 hover:-translate-y-0.5" href="#solucion">Solución</a>
+<a class="text-on-surface/70 hover:text-primary font-label-md transition-all duration-300 hover:-translate-y-0.5" href="#servicios">Servicios</a>
+<a class="text-on-surface/70 hover:text-primary font-label-md transition-all duration-300 hover:-translate-y-0.5" href="#faq">FAQ</a>
+<a class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg shadow-primary/20" href="javascript:void(0)" onclick="event.preventDefault(); myLandbot.open();">Get Started</a>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+<video autoplay="" class="absolute inset-0 w-full h-full object-cover z-0" loop="" muted="" playsinline="" preload="auto">
+<source src="https://res.cloudinary.com/hw31kdln/video/upload/v1784136122/pika-0c0cc2b1-31e7-4fee-a09e-01369b8cd4e3_online-video-cutter.com_gibdf3.webm" type="video/webm">
+</video><div class="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent z-0"></div>
+<div class="relative z-10 max-w-[900px] text-center px-margin-mobile">
+<div class="flex justify-center mb-8">
+<img alt="Migue Strategy Logo Center" class="w-32 md:w-48 animate-pulse" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjTv1Byhab6hyAJqT7F5wIwQ16rlXxOyRyl-cRxW1QVZToz07JYu311bpL5ygn5XO7Z0phBiJgWQV4ld2qvJ1gYFD-moAVGd8QYmdtM4N247MMvHguh6lobrxt6Pb57mCfuNU5a2eboZTvpwg4bg3sfopxC3kpRLjJx2C4yiQMLIB_tlOFLXNKIRN8KSi9sKK9ZUF7y5eiNzGHOIwHbDPuMoxvucEeNzjNlQGo4RVPMz1SXlYq1HY85y6QvoXhphPezs1UTKWkGXQ">
+</div>
+<h1 class="text-4xl md:text-7xl font-bold font-display-lg text-primary gold-glow mb-6 leading-tight" style="text-shadow: rgba(0, 0, 0, 0.8) 0px 4px 12px;">
+                Estrategias Revolucionarias para el Éxito Empresarial
+            </h1>
+<p class="text-lg md:text-2xl text-on-surface font-body-lg mb-12 max-w-2xl mx-auto" style="text-shadow: rgba(0, 0, 0, 0.9) 0px 2px 8px;">
+                Diseño inteligente y ejecución impecable para empresas Fortune 500. Transformamos la complejidad en ventaja competitiva.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+<a class="w-full sm:w-auto bg-primary text-on-primary px-10 py-4 rounded-full font-bold text-lg btn-shine transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary/20" href="javascript:void(0)" onclick="event.preventDefault(); myLandbot.open();">
+                    Agenda una reunión
+                </a>
+<a class="w-full sm:w-auto glass text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-all border border-white/20 active:scale-95" href="mailto:miguel.avila.h@uinenlinea.mx">
+                    Solicita Cotización
+                </a>
+</div>
+</div>
+</section>
+<!-- Infinite Logo Carousel -->
+<section class="py-lg bg-surface-container-lowest border-y border-white/5 overflow-hidden">
+<div class="infinite-scroll gap-16 items-center">
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold">FORTUNE</span></div>
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold italic">STRIPE</span></div>
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold uppercase tracking-widest">Global</span></div>
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold">TECH-E</span></div>
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold">ELITE</span></div>
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold">ZENITH</span></div>
+<!-- Duplicate for infinite effect -->
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold">FORTUNE</span></div>
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold italic">STRIPE</span></div>
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold uppercase tracking-widest">Global</span></div>
+<div class="flex-shrink-0 w-[200px] h-12 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"><span class="text-2xl font-bold">TECH-E</span></div>
+</div>
+</section>
+<!-- The Problem -->
+<section class="py-xl max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop grid md:grid-cols-2 gap-xl items-center" id="problema">
+<div class="space-y-6">
+<span class="text-primary font-bold tracking-widest uppercase text-sm">El Desafío Actual</span>
+<h2 class="text-3xl md:text-5xl font-bold font-display-sm leading-tight">La erosión invisible de sus márgenes operativos.</h2>
+<p class="text-on-surface/70 text-lg leading-relaxed">
+                En el ecosistema B2B contemporáneo, la falta de automatización no es solo una ineficiencia; es una fuga de capital constante. Las empresas enfrentan costos ocultos masivos derivados de procesos manuales.
+            </p>
+<div class="space-y-4">
+<div class="flex gap-4 items-start group benefit-card p-3 rounded-xl transition-all hover:bg-white/5">
+<span class="material-symbols-outlined text-primary transition-transform group-hover:scale-110">warning</span>
+<p class="font-body-md transition-colors group-hover:text-primary">Pérdida del 30% de productividad en tareas repetitivas.</p>
+</div>
+<div class="flex gap-4 items-start group benefit-card p-3 rounded-xl transition-all hover:bg-white/5">
+<span class="material-symbols-outlined text-primary transition-transform group-hover:scale-110">warning</span>
+<p class="font-body-md transition-colors group-hover:text-primary">Incapacidad de escalar operaciones sin aumentar la nómina.</p>
+</div>
+<div class="flex gap-4 items-start group benefit-card p-3 rounded-xl transition-all hover:bg-white/5">
+<span class="material-symbols-outlined text-primary transition-transform group-hover:scale-110">warning</span>
+<p class="font-body-md transition-colors group-hover:text-primary">Datos desaprovechados que impiden la toma de decisiones.</p>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-all duration-500 rounded-full"></div>
+<div class="glass p-8 rounded-2xl relative border border-white/10 transition-all hover:shadow-[0_0_30px_rgba(233,193,118,0.1)]">
+<div class="h-64 flex items-center justify-center flex-col text-center">
+<span class="material-symbols-outlined text-6xl text-primary mb-4 animate-bounce">analytics</span>
+<h4 class="text-xl font-bold mb-2">Pérdida de ROI Acumulada</h4>
+<div class="w-full bg-surface-container h-4 rounded-full overflow-hidden mt-4">
+<div class="bg-primary h-full transition-all duration-1000 delay-300" style="width: 75%"></div>
+</div>
+<p class="text-sm mt-4 text-on-surface-variant">Análisis proyectado de ineficiencias B2B</p>
+</div>
+</div>
+</div>
+</section>
+<!-- IA Solution -->
+<section class="py-xl bg-surface-container relative overflow-hidden" id="solucion">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop grid md:grid-cols-2 gap-xl items-center relative z-10">
+<div class="order-2 md:order-1 relative rounded-2xl overflow-hidden shadow-2xl group">
+<video autoplay="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-110" loop="" muted="" playsinline="">
+<source src="https://res.cloudinary.com/hw31kdln/video/upload/v1783976624/hailuo-2_3_Una_robot_futurista_con_rasgos_femeninos_elegantes_y_profesionales_se_encuentra_-0_cymyio.webm" type="video/webm">
+</video>
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+</div>
+<div class="order-1 md:order-2 space-y-6">
+<span class="text-primary font-bold tracking-widest uppercase text-sm">La Respuesta Tecnológica</span>
+<h2 class="text-3xl md:text-5xl font-bold font-display-sm leading-tight">Inteligencia Artificial para Empresas</h2>
+<p class="text-on-surface/70 text-lg leading-relaxed">
+                    No implementamos "chatbots". Diseñamos arquitecturas neuronales que optimizan el flujo de trabajo completo.
+                </p>
+<ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<li class="flex items-center gap-2 hover:text-primary transition-colors cursor-default"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> ROI Optimizado</li>
+<li class="flex items-center gap-2 hover:text-primary transition-colors cursor-default"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Procesos 24/7</li>
+<li class="flex items-center gap-2 hover:text-primary transition-colors cursor-default"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Análisis Predictivo</li>
+<li class="flex items-center gap-2 hover:text-primary transition-colors cursor-default"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Omnicanalidad Real</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Success Cases -->
+<section class="py-xl overflow-hidden">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop mb-12">
+<h2 class="text-3xl md:text-5xl font-bold">Casos de Éxito</h2>
+</div>
+<div class="relative max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="swiper success-swiper w-full swiper-fade swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
+<div aria-live="off" class="swiper-wrapper" id="swiper-wrapper-e49c8b685e9714c10" style="transition-duration: 0ms; transition-delay: 0ms;">
+<!-- Case 1 -->
+<!-- Case 2 -->
+<!-- Case 3 -->
+<div aria-label="2 / 3" class="swiper-slide swiper-slide-next" data-swiper-slide-index="1" role="group" style="width: 358px; opacity: 0; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+<div class="glass p-10 rounded-3xl grid md:grid-cols-2 gap-8 items-center group">
+<div>
+<h4 class="text-primary font-bold mb-2">Corporate Reforma</h4>
+<h3 class="text-3xl font-bold mb-4">Expansión Global AC</h3>
+<p class="text-on-surface-variant mb-6 text-lg">"Unificamos todos nuestros canales de venta en una sola visión omnicanal, incrementando el ticket promedio en tiempo récord."</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface p-4 rounded-xl border border-white/5 group-hover:border-primary/40 transition-all hover:bg-primary/5">
+<p class="text-2xl font-bold text-primary">+85%</p>
+<p class="text-xs uppercase tracking-widest">Ticket Promedio</p>
+</div>
+<div class="bg-surface p-4 rounded-xl border border-white/5 group-hover:border-primary/40 transition-all hover:bg-primary/5">
+<p class="text-2xl font-bold text-primary">3.5x</p>
+<p class="text-xs uppercase tracking-widest">Crecimiento</p>
+</div>
+</div>
+</div>
+<div class="h-80 bg-surface-container rounded-2xl overflow-hidden border border-white/10 relative">
+<img alt="Mexico City Skyline" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCenDpl4PUjlheyckz6LqkXgcm_UF-zBWFhW2JhnrXzbhzZs-R6TMqlF83x3KRCrfcacK6CrMiReVuKB5dj3dP1TlqoROBoH0kR7iLh8m7oDSMx4McZZGpevdBH-MxtPvdvabbgnvD2tUGPGJiW2wAsivNRE1SuyNJLOEjiGpl7DhaKU7JvRVZlio2NgxM2A1pVUsNl7UwWpbwB2puzGOg66nmrJicDBlT9ytjaBVJ1nSu3PseG9LzcJhxjiFXTjjjtl7u2TtZStAA">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+</div>
+</div>
+</div><div aria-label="3 / 3" class="swiper-slide swiper-slide-prev" data-swiper-slide-index="2" role="group" style="width: 358px; opacity: 0; transform: translate3d(-358px, 0px, 0px); transition-duration: 0ms;">
+<div class="glass p-10 rounded-3xl grid md:grid-cols-2 gap-8 items-center group">
+<div>
+<h4 class="text-primary font-bold mb-2">Elite Business Hub</h4>
+<h3 class="text-3xl font-bold mb-4">Aumento de 215% en Conversiones</h3>
+<p class="text-on-surface-variant mb-6 text-lg">"La implementación de la estrategia omnicanal transformó nuestra presencia digital de un gasto a motor principal de ingresos."</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface p-4 rounded-xl border border-white/5 group-hover:border-primary/40 transition-all hover:bg-primary/5">
+<p class="text-2xl font-bold text-primary">+215%</p>
+<p class="text-xs uppercase tracking-widest">ROI Anual</p>
+</div>
+<div class="bg-surface p-4 rounded-xl border border-white/5 group-hover:border-primary/40 transition-all hover:bg-primary/5">
+<p class="text-2xl font-bold text-primary">-45%</p>
+<p class="text-xs uppercase tracking-widest">Costo Adquisición</p>
+</div>
+</div>
+</div>
+<div class="h-80 bg-surface-container rounded-2xl overflow-hidden border border-white/10 relative">
+<img alt="Elite Office Interior" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-QxKMgAW4aOb3bWwxbQKhEeKxV7_8ThPRxRmam49YS0wwB7UlhEQvHkY-UZPLo_XlNzGeqD0y65Jon03D12cGcRvfj6EOB3OK3viRCo66ginVOb8ow5S4k4gQJ2prq9NRJ2-jkEVyY-RGwSNP7b3gpAC3QhPireghZvkAe3ezvsL_93d1Z7P-SbJCggPcgys-nFE-G6V5AozOQZFtFIh6gDBYVYkM8V0aFcHa_TMUBKG1R11pmwF_pm55Dx8WAfZethTA8GFH9aU">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+</div>
+</div>
+</div><div aria-label="1 / 3" class="swiper-slide swiper-slide-visible swiper-slide-active" data-swiper-slide-index="0" role="group" style="width: 358px; opacity: 1; transform: translate3d(-716px, 0px, 0px); transition-duration: 0ms;">
+<div class="glass p-10 rounded-3xl grid md:grid-cols-2 gap-8 items-center group">
+<div>
+<h4 class="text-primary font-bold mb-2">Global Tech Innovation</h4>
+<h3 class="text-3xl font-bold mb-4">Colaboración Escalable</h3>
+<p class="text-on-surface-variant mb-6 text-lg">"Logramos escalar nuestras operaciones sin contratar personal adicional, gracias a la infraestructura de IA personalizada."</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface p-4 rounded-xl border border-white/5 group-hover:border-primary/40 transition-all hover:bg-primary/5">
+<p class="text-2xl font-bold text-primary">98%</p>
+<p class="text-xs uppercase tracking-widest">Eficiencia</p>
+</div>
+<div class="bg-surface p-4 rounded-xl border border-white/5 group-hover:border-primary/40 transition-all hover:bg-primary/5">
+<p class="text-2xl font-bold text-primary">+1.2M</p>
+<p class="text-xs uppercase tracking-widest">Ahorro Anual</p>
+</div>
+</div>
+</div>
+<div class="h-80 bg-surface-container rounded-2xl overflow-hidden border border-white/10 relative">
+<img alt="Tech Hub Office" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA7CF02D8Op0_Py5UF-DyMISptuXVJ3G7t5GEzvtP79mP96sseTbNkhIOvjJRp1QKBY50UKwn1DbUw3t1pCg0uyeLpB4gVUCGNu1u0duXoe8ivI3A1nFEkgM3tNXgC2SNLEvAsGk4HHkqVUTVFMImPisILsUr2EjkMVhpTvxGy7oYAUZnMLaIs3YY9iHVzaJoJVStZEvIYUsSaMrUjxBip2HoxqNzJ7JE_nG82eo5pXHefh3n4ahmGF2A5Xs_C38UqJvEZI9YgveE">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+</div>
+</div>
+</div></div>
+<div class="swiper-pagination !-bottom-8 swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 1" aria-current="true"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 3"></span></div>
+<span aria-atomic="true" aria-live="assertive" class="swiper-notification"></span><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+<!-- Navigation Buttons -->
+<div aria-controls="swiper-wrapper-e49c8b685e9714c10" aria-label="Previous slide" class="swiper-button-prev !hidden md:!flex" role="button" tabindex="0"></div>
+<div aria-controls="swiper-wrapper-e49c8b685e9714c10" aria-label="Next slide" class="swiper-button-next !hidden md:!flex" role="button" tabindex="0"></div>
+</div>
+</section>
+<!-- Services -->
+<section class="py-xl bg-surface-container-low" id="servicios">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="mb-16">
+<h2 class="text-3xl md:text-5xl font-bold mb-4">Nuestros Pilares</h2>
+<p class="text-on-surface-variant">Soluciones integrales de punta a punta.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="pillar-card h-[450px]" style="translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);">
+<div class="glass h-full p-8 rounded-3xl border border-white/10 flex flex-col justify-between hover:border-primary/50 transition-all hover:scale-[1.02] hover:shadow-[0_10px_30px_rgba(233,193,118,0.1)] group">
+<div>
+<span class="material-symbols-outlined text-5xl text-primary mb-6 transition-transform group-hover:rotate-12">strategy</span>
+<h3 class="text-2xl font-bold mb-4">Consultoría Estratégica</h3>
+<p class="text-on-surface-variant">Análisis profundo de mercado y hoja de ruta personalizada para el escalado masivo.</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-2 group/btn active:scale-95 transition-all" href="mailto:miguel.avila.h@uinenlinea.mx">
+                            Saber más <span class="material-symbols-outlined group-hover/btn:translate-x-2 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+<div class="pillar-card h-[450px]" style="translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);">
+<div class="glass h-full p-8 rounded-3xl border border-primary/20 bg-primary/5 flex flex-col justify-between hover:border-primary/50 transition-all hover:scale-[1.02] hover:shadow-[0_10px_30px_rgba(233,193,118,0.1)] group">
+<div>
+<span class="material-symbols-outlined text-5xl text-primary mb-6 transition-transform group-hover:scale-110">layers</span>
+<h3 class="text-2xl font-bold mb-4">Diseño UI/UX Alto Nivel</h3>
+<p class="text-on-surface-variant">Interfaces que no solo se ven bien, sino que están diseñadas para convertir y retener.</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-2 group/btn active:scale-95 transition-all" href="mailto:miguel.avila.h@uinenlinea.mx">
+                            Saber más <span class="material-symbols-outlined group-hover/btn:translate-x-2 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+<div class="pillar-card h-[450px]" style="translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);">
+<div class="glass h-full p-8 rounded-3xl border border-white/10 flex flex-col justify-between hover:border-primary/50 transition-all hover:scale-[1.02] hover:shadow-[0_10px_30px_rgba(233,193,118,0.1)] group">
+<div>
+<span class="material-symbols-outlined text-5xl text-primary mb-6 transition-transform group-hover:bounce">smart_toy</span>
+<h3 class="text-2xl font-bold mb-4">Automatización Omnicanal</h3>
+<p class="text-on-surface-variant">Sincronización total de sus canales de venta mediante flujos IA inteligentes.</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-2 group/btn active:scale-95 transition-all" href="mailto:miguel.avila.h@uinenlinea.mx">
+                            Saber más <span class="material-symbols-outlined group-hover/btn:translate-x-2 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Metrics Section -->
+<section class="py-xl bg-primary text-on-primary">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-2 lg:grid-cols-4 gap-xl text-center">
+<div class="metric-item">
+<p class="text-4xl md:text-6xl font-extrabold mb-2 effervescent-text glow-burst" data-target="350">350</p>
+<p class="font-bold text-sm uppercase tracking-widest opacity-80">Clientes Elite</p>
+</div>
+<div class="metric-item">
+<p class="text-4xl md:text-6xl font-extrabold mb-2 effervescent-text glow-burst" data-target="98">98%</p>
+<p class="font-bold text-sm uppercase tracking-widest opacity-80">Satisfacción</p>
+</div>
+<div class="metric-item">
+<p class="text-4xl md:text-6xl font-extrabold mb-2 effervescent-text glow-burst" data-target="10">10</p>
+<p class="font-bold text-sm uppercase tracking-widest opacity-80">Años de Maestría</p>
+</div>
+<div class="metric-item">
+<p class="text-4xl md:text-6xl font-extrabold mb-2 effervescent-text glow-burst" data-target="2000">2000</p>
+<p class="font-bold text-sm uppercase tracking-widest opacity-80">Proyectos</p>
+</div>
+</div>
+</section>
+<!-- FAQ Accordion -->
+<section class="py-xl bg-surface-container-low" id="faq">
+<div class="max-w-[800px] mx-auto px-margin-mobile">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-5xl font-bold mb-4">Preguntas Frecuentes</h2>
+<p class="text-on-surface-variant">Claridad total antes de empezar.</p>
+</div>
+<div class="space-y-4">
+<div class="glass rounded-xl overflow-hidden hover:bg-white/5 transition-colors group">
+<button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFaq(this)">
+<span class="font-bold text-lg group-hover:text-primary transition-colors">¿Cuánto tiempo tarda ver resultados reales?</span>
+<span class="material-symbols-outlined transition-transform duration-300">expand_more</span>
+</button>
+<div class="px-6 pb-0 max-h-0 overflow-hidden faq-content">
+<p class="pb-6 text-on-surface-variant">Aunque los sistemas se despliegan rápidamente, las mejoras métricas en el ROI suelen ser plenamente visibles a partir del primer trimestre.</p>
+</div>
+</div>
+<div class="glass rounded-xl overflow-hidden hover:bg-white/5 transition-colors group">
+<button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFaq(this)">
+<span class="font-bold text-lg group-hover:text-primary transition-colors">¿Mi empresa es demasiado pequeña para IA?</span>
+<span class="material-symbols-outlined transition-transform duration-300">expand_more</span>
+</button>
+<div class="px-6 pb-0 max-h-0 overflow-hidden faq-content">
+<p class="pb-6 text-on-surface-variant">Trabajamos con empresas que buscan escalar. Si su proceso es manual, la IA es precisamente lo que necesita.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Form -->
+<section class="py-xl relative" id="contacto">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop grid md:grid-cols-2 gap-xl items-center relative z-10">
+<div>
+<h2 class="text-4xl md:text-6xl font-bold mb-6">El siguiente nivel comienza aquí.</h2>
+<p class="text-xl text-on-surface-variant mb-8">No vendemos servicios, formamos alianzas de alto rendimiento.</p>
+<div class="space-y-6">
+<a class="flex items-center gap-4 group cursor-pointer" href="mailto:miguel.avila.h@uinenlinea.mx">
+<div class="w-12 h-12 glass rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<span class="text-lg group-hover:text-primary transition-colors">miguel.avila.h@uinenlinea.mx</span>
+</a>
+</div>
+</div>
+<div class="glass p-10 rounded-3xl border border-white/10 hover:border-primary/20 transition-colors">
+<form action="mailto:miguel.avila.h@uinenlinea.mx" class="space-y-6" enctype="text/plain" method="GET">
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest text-primary font-bold">Nombre Completo</label>
+<input class="w-full bg-surface-container border-b border-outline focus:border-primary transition-colors py-3 px-4 text-white outline-none" name="subject" placeholder="Ej. Javier Larra" required="" type="text">
+</div>
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest text-primary font-bold">Empresa</label>
+<input class="w-full bg-surface-container border-b border-outline focus:border-primary transition-colors py-3 px-4 text-white outline-none" placeholder="empresa.com" type="text">
+</div>
+<button class="w-full bg-primary text-on-primary font-bold py-4 rounded-xl btn-shine transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/20" type="submit">
+                        Enviar Solicitud Elite
+                    </button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="relative w-full overflow-hidden min-h-[500px] flex items-center">
+<video autoplay="" class="absolute inset-0 w-full h-full object-cover z-0" id="footerVideo" loop="" playsinline="" preload="auto">
+<source src="https://res.cloudinary.com/hw31kdln/video/upload/v1784147311/Call_center_agent_new_strategy_1__202607051538_f7pdtu.webm" type="video/webm">
+</video>
+<!-- Enhanced Clarity Overlays -->
+<div class="absolute inset-0 bg-black/10 z-[1]"></div>
+<!-- Sound Control Toggle -->
+<button class="absolute bottom-10 left-10 z-20 glass w-12 h-12 rounded-full flex items-center justify-center text-white border border-white/20 hover:bg-white/10 transition-all group shadow-2xl" id="toggleAudio">
+<span class="material-symbols-outlined text-2xl" id="audioIcon">volume_off</span>
+</button>
+<div class="relative z-10 max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-xl grid grid-cols-1 md:grid-cols-4 gap-gutter w-full text-shadow">
+<div class="space-y-6">
+<img alt="Migue Strategy Footer Logo" class="h-12 w-auto mb-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjTv1Byhab6hyAJqT7F5wIwQ16rlXxOyRyl-cRxW1QVZToz07JYu311bpL5ygn5XO7Z0phBiJgWQV4ld2qvJ1gYFD-moAVGd8QYmdtM4N247MMvHguh6lobrxt6Pb57mCfuNU5a2eboZTvpwg4bg3sfopxC3kpRLjJx2C4yiQMLIB_tlOFLXNKIRN8KSi9sKK9ZUF7y5eiNzGHOIwHbDPuMoxvucEeNzjNlQGo4RVPMz1SXlYq1HY85y6QvoXhphPezs1UTKWkGXQ">
+<p class="text-on-surface-variant font-label-sm">© 2024 Migue Strategy. Elite Performance Systems.</p><div class="mt-4 space-y-4 flex flex-col items-start"><h4 class="text-primary font-bold uppercase tracking-widest text-xs">Canal Exclusivo</h4><a class="group flex items-center gap-3 bg-surface-container border border-primary/20 p-4 rounded-xl hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(233,193,118,0.1)]" href="http://wa.me/525583335581" target="_blank"><div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-on-primary group-hover:scale-110 transition-transform"><span class="material-symbols-outlined text-2xl">chat</span></div><div class="flex flex-col"><span class="text-primary font-bold text-sm">WhatsApp Elite</span><span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Soporte Prioritario</span></div></a></div>
+<div class="flex gap-4">
+<a class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all duration-300" href="http://wa.me/525583335581" target="_blank">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.805.249 2.227.412.558.217.957.477 1.377.896.419.42.679.819.896 1.377.163.422.358 1.057.412 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.054 1.17-.249 1.805-.412 2.227-.217.558-.477.957-.896 1.377-.42.419-.819.679-1.377.896-.422.163-1.057.358-2.227.412-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.054-1.805-.249-2.227-.412-.558-.217-.957-.477-1.377-.896-.419-.42-.679-.819-.896-1.377-.163-.422-.358-1.057-.412-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.054-1.17.249-1.805.412-2.227.217-.558.477-.957 1.377-.896.42-.419.819-.679 1.377-.896.422-.163 1.057-.358 2.227-.412 1.266-.058 1.646-.07 4.85-.07z"></path></svg>
+</a>
+</div>
+</div>
+<div class="space-y-4">
+<h4 class="text-primary font-bold">Navegación</h4>
+<ul class="space-y-2 font-label-sm">
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors" href="#servicios">Servicios</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors" href="#contacto">Contacto</a></li>
+</ul>
+</div>
+</div>
+</footer>
+<script>
+    // Lenis Smooth Scroll
+    const lenis = new Lenis();
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // GSAP Setup
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Swiper Setup
+    const swiper = new Swiper('.success-swiper', {
+        loop: true,
+        pagination: { 
+            el: '.swiper-pagination', 
+            clickable: true 
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        autoplay: { 
+            delay: 5000,
+            disableOnInteraction: false
+        },
+        effect: 'fade',
+        fadeEffect: {
+            crossFade: true
+        }
+    });
+
+    // FAQ Toggle
+    function toggleFaq(button) {
+        const content = button.nextElementSibling;
+        const isOpen = content.style.maxHeight !== '0px' && content.style.maxHeight !== '';
+        
+        document.querySelectorAll('.faq-content').forEach(c => {
+            c.style.maxHeight = '0px';
+            c.previousElementSibling.querySelector('span:last-child').classList.remove('rotate-180');
+        });
+
+        if (!isOpen) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            button.querySelector('span:last-child').classList.add('rotate-180');
+        }
+    }
+
+    // Animated Counters with Effervescence
+    document.querySelectorAll('[data-target]').forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const text = counter.innerText;
+        const hasPlus = text.includes('+');
+        const hasPercent = text.includes('%');
+
+        ScrollTrigger.create({
+            trigger: counter,
+            start: "top 85%",
+            onEnter: () => {
+                let obj = { val: 0 };
+                gsap.to(obj, {
+                    val: target,
+                    duration: 2.5,
+                    ease: "power2.out",
+                    onUpdate: () => {
+                        const newVal = Math.floor(obj.val);
+                        const currentDisplay = (hasPlus ? '+' : '') + newVal + (hasPercent ? '%' : '');
+                        
+                        if (counter.innerText !== currentDisplay) {
+                            counter.innerHTML = currentDisplay;
+                            counter.classList.add('sparkle-animation');
+                            setTimeout(() => counter.classList.remove('sparkle-animation'), 500);
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    // Pillar Card Animations
+    gsap.from(".pillar-card", {
+        scrollTrigger: {
+            trigger: "#servicios",
+            start: "top 70%",
+        },
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 0.8
+    });
+
+    // Back to Top Logic
+    const btt = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 500) {
+            btt.style.opacity = '1';
+            btt.style.transform = 'translateY(0)';
+        } else {
+            btt.style.opacity = '0';
+            btt.style.transform = 'translateY(10px)';
+        }
+    });
+    btt.onclick = () => lenis.scrollTo(0);
+
+    // Audio Control Logic for Footer Video
+    const footerVideo = document.getElementById('footerVideo');
+    const toggleAudioBtn = document.getElementById('toggleAudio');
+    const audioIcon = document.getElementById('audioIcon');
+    footerVideo.muted = true; 
+
+    toggleAudioBtn.addEventListener('click', () => {
+        if (footerVideo.muted) {
+            footerVideo.muted = false;
+            audioIcon.innerText = 'volume_up';
+        } else {
+            footerVideo.muted = true;
+            audioIcon.innerText = 'volume_off';
+        }
+    });
+</script>
+<!-- Landbot Integration Script -->
+<script src="https://cdn.landbot.io/landbot-3/landbot-3.0.0.js"></script>
+<script>
+  var myLandbot = new Landbot.Livechat({
+    configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3479748-YNI5FKZSJPN2I2YD/index.json',
+  });
+</script>
+<div><div class="sc-kUiVwB sc-byRyzU eZRJaG gxalqj LandbotLivechat" proactiveheight="0"><iframe sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads allow-top-navigation-by-user-activation" style="width: 100%; height: 100%; border: medium;" title="Landbot chat widget"></iframe></div></div>
+
+<div><div class="sc-kUiVwB sc-byRyzU eZRJaG gxalqj LandbotLivechat" proactiveheight="0"><iframe sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads allow-top-navigation-by-user-activation" title="Landbot chat widget" style="width: 100%; height: 100%; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;"></iframe></div></div></body></html>
